@@ -3,6 +3,8 @@
 const productSection = document.getElementById('app');
 const navElement = document.getElementById('navigation')
 const basketIcon = document.getElementById('basketIcon')
+const LoadingScreen = document.getElementById('loadingscreen');
+const footer = document.getElementById('footer');
 
 
 
@@ -13,6 +15,26 @@ let myProducts = null
 
 // page load
 InitApp()
+
+function ShowLoadingScreen() {
+    LoadingScreen.style.display = 'block';
+    productSection.style.display = 'none';
+    footer.style.display = 'none';
+}
+
+function removeLoadingScreen() {
+    if (LoadingScreen) {
+        LoadingScreen.style.display = 'none';
+        productSection.style.display = 'block';
+        footer.style.display = 'flex';
+    }
+}
+
+// document.addEventListener('DOMContentLoaded', ShowLoadingScreen);
+
+// window.addEventListener('load', removeLoadingScreen);
+
+
 
 
 
@@ -92,6 +114,8 @@ function ReadLocalStorageData() {
 
 
 function InitApp() {
+
+    //to do create loading screen call
 
     InitializeBasket()
     GetProductData()
@@ -255,6 +279,9 @@ function NavCallback(CategoryName) {
     //console.log(CategoryName);
     CloseMobileNav()
     // get data from API  bug API url og send videre
+
+    ShowLoadingScreen();
+
     if (CategoryName == "All") {
         CreateProductView(myProducts)
     }
@@ -301,6 +328,7 @@ function ProductCallback(myId) {
 //----------------------------------------------------------------------
 
 function LogoCallback() {
+    ShowLoadingScreen();
     GetProductData()
 }
 
@@ -575,6 +603,8 @@ function CreateProductView(myCards) {
     myHTML += '</section>'
 
     productSection.innerHTML = myHTML
+
+    removeLoadingScreen();
 }
 
 
@@ -594,6 +624,7 @@ function buildProduct(product) {
 
 
     productSection.innerHTML = myHTML
+    removeLoadingScreen();
 }
 
 
